@@ -17,4 +17,4 @@ Open [http://localhost:3000](http://localhost:3000).
 npm run build
 ```
 
-The static site is written to `out/`.
+The static site is written to `out/`..
