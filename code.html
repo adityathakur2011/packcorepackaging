@@ -1,0 +1,903 @@
+<!DOCTYPE html>
+
+<html class="scroll-smooth" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Packcore Packaging — Powering Products with Better Packaging</title>
+<link href="https://fonts.googleapis.com" rel="preconnect"/>
+<link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&amp;family=JetBrains+Mono:ital,wght@0,400;0,500;0,600;0,700;1,400&amp;display=swap" rel="stylesheet"/>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          colors: {
+            kraft: {
+              50: '#FDFBF7',
+              100: '#F9F6F0',
+              200: '#F4EFE6',
+              300: '#EBE4D8',
+              400: '#DED3C1',
+              500: '#C8B69B',
+              600: '#9E8563',
+              800: '#4A3B29',
+              900: '#2E2214',
+            },
+            charcoal: {
+              900: '#121214',
+              800: '#18181B',
+              700: '#27272A',
+              600: '#3F3F46',
+              500: '#52525B',
+              400: '#71717A',
+            },
+            brandblue: {
+              50: '#EFF6FF',
+              100: '#DBEAFE',
+              400: '#60A5FA',
+              500: '#3B82F6',
+              600: '#2563EB',
+              700: '#1D4ED8',
+              800: '#1E40AF',
+              900: '#1E3A8A',
+            }
+          },
+          fontFamily: {
+            sans: ['Inter', 'sans-serif'],
+            mono: ['JetBrains Mono', 'monospace'],
+          },
+          boxShadow: {
+            'pop-sm': '0 4px 6px -1px rgba(24, 24, 27, 0.05), 0 2px 4px -2px rgba(24, 24, 27, 0.05)',
+            'pop-card': '0 20px 25px -5px rgba(24, 24, 27, 0.08), 0 8px 10px -6px rgba(24, 24, 27, 0.04)',
+            'pop-hover': '0 25px 35px -8px rgba(24, 24, 27, 0.12), 0 12px 14px -6px rgba(37, 99, 235, 0.08)',
+            'shipping-label': '0 15px 35px -5px rgba(24, 24, 27, 0.16), 0 6px 12px -3px rgba(0, 0, 0, 0.08)',
+          }
+        }
+      }
+    }
+  </script>
+<style>
+    /* Technical Dieline Blueprint Background Pattern */
+    .dieline-blueprint {
+      background-color: #F4EFE6;
+      background-image: 
+        radial-gradient(circle at 1px 1px, rgba(37, 99, 235, 0.15) 1px, transparent 0),
+        linear-gradient(to right, rgba(24, 24, 27, 0.035) 1px, transparent 1px),
+        linear-gradient(to bottom, rgba(24, 24, 27, 0.035) 1px, transparent 1px);
+      background-size: 32px 32px, 16px 16px, 16px 16px;
+    }
+    
+    .dieline-blueprint-subtle {
+      background-color: #F9F6F0;
+      background-image: 
+        linear-gradient(to right, rgba(24, 24, 27, 0.03) 1px, transparent 1px),
+        linear-gradient(to bottom, rgba(24, 24, 27, 0.03) 1px, transparent 1px);
+      background-size: 24px 24px;
+    }
+
+    /* CSS 3D Box Perspective & Interactive Assembly Stage */
+    .stage-perspective {
+      perspective: 1300px;
+      perspective-origin: 50% 38%;
+      transform-style: preserve-3d;
+    }
+
+    .box-assembly {
+      transform-style: preserve-3d;
+      transform: rotateX(24deg) rotateY(-28deg);
+      transition: transform 0.65s cubic-bezier(0.2, 0.8, 0.2, 1);
+    }
+
+    .stage-perspective:hover .box-assembly {
+      transform: rotateX(18deg) rotateY(-18deg) translateY(-8px);
+    }
+
+    /* Box Flap Kinetic Unfolding Animations */
+    @keyframes flapUnfoldTop {
+      0% { transform: rotateX(0deg); }
+      100% { transform: rotateX(125deg); }
+    }
+    @keyframes flapUnfoldLeft {
+      0% { transform: rotateY(0deg); }
+      100% { transform: rotateY(-115deg); }
+    }
+    @keyframes flapUnfoldRight {
+      0% { transform: rotateY(0deg); }
+      100% { transform: rotateY(115deg); }
+    }
+    @keyframes flapUnfoldFront {
+      0% { transform: rotateX(0deg); }
+      100% { transform: rotateX(-120deg); }
+    }
+
+    .flap-top-hinge {
+      transform-origin: top center;
+      transform: rotateX(118deg);
+      transition: transform 0.8s cubic-bezier(0.34, 1.56, 0.64, 1);
+    }
+    .flap-left-hinge {
+      transform-origin: left center;
+      transform: rotateY(-110deg);
+      transition: transform 0.8s cubic-bezier(0.34, 1.56, 0.64, 1);
+    }
+    .flap-right-hinge {
+      transform-origin: right center;
+      transform: rotateY(110deg);
+      transition: transform 0.8s cubic-bezier(0.34, 1.56, 0.64, 1);
+    }
+    .flap-front-hinge {
+      transform-origin: bottom center;
+      transform: rotateX(-115deg);
+      transition: transform 0.8s cubic-bezier(0.34, 1.56, 0.64, 1);
+    }
+
+    /* Interactive Box State: Close / Fold Flaps On Toggle */
+    .box-assembly.closed .flap-top-hinge { transform: rotateX(0deg) !important; }
+    .box-assembly.closed .flap-left-hinge { transform: rotateY(0deg) !important; }
+    .box-assembly.closed .flap-right-hinge { transform: rotateY(0deg) !important; }
+    .box-assembly.closed .flap-front-hinge { transform: rotateX(0deg) !important; }
+
+    /* The Pop Hover Effect for Architecture Cards */
+    .tactical-pop {
+      transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+      position: relative;
+    }
+    .tactical-pop:hover {
+      transform: translateY(-6px) scale(1.01);
+      box-shadow: 0 20px 25px -5px rgba(24, 24, 27, 0.08), 0 8px 10px -6px rgba(24, 24, 27, 0.04), 0 0 0 1px #2563EB;
+    }
+
+    /* Subtle blueprint corner crosshairs on cards */
+    .crosshair-corners::before,
+    .crosshair-corners::after {
+      content: '';
+      position: absolute;
+      width: 10px;
+      height: 10px;
+      pointer-events: none;
+      opacity: 0.3;
+      transition: opacity 0.3s ease;
+    }
+    .crosshair-corners::before {
+      top: 6px;
+      left: 6px;
+      border-top: 1.5px solid #2563EB;
+      border-left: 1.5px solid #2563EB;
+    }
+    .crosshair-corners::after {
+      bottom: 6px;
+      right: 6px;
+      border-bottom: 1.5px solid #2563EB;
+      border-right: 1.5px solid #2563EB;
+    }
+    .crosshair-corners:hover::before,
+    .crosshair-corners:hover::after {
+      opacity: 1;
+    }
+
+    /* Barcode Graphics in Pure CSS */
+    .shipping-barcode {
+      background: repeating-linear-gradient(
+        90deg,
+        #18181B 0px,
+        #18181B 2px,
+        transparent 2px,
+        transparent 3.5px,
+        #18181B 3.5px,
+        #18181B 6px,
+        transparent 6px,
+        transparent 8px,
+        #18181B 8px,
+        #18181B 9.5px,
+        transparent 9.5px,
+        transparent 13px,
+        #18181B 13px,
+        #18181B 16px,
+        transparent 16px,
+        transparent 18px,
+        #18181B 18px,
+        #18181B 21px
+      );
+    }
+  </style>
+</head>
+<body class="bg-kraft-200 text-charcoal-800 font-sans antialiased selection:bg-brandblue-600 selection:text-white">
+<!-- TOP INDUSTRIAL CALIBRATION BANNER -->
+<div class="bg-charcoal-900 text-kraft-300 text-xs py-2 px-4 border-b border-charcoal-700 font-mono">
+<div class="max-w-7xl mx-auto flex flex-wrap items-center justify-between gap-3">
+<div class="flex items-center gap-3">
+<span class="inline-flex items-center gap-1.5 px-2 py-0.5 rounded bg-brandblue-600/30 text-brandblue-400 font-bold border border-brandblue-500/40 text-[10px] tracking-wider">
+<span class="w-1.5 h-1.5 rounded-full bg-brandblue-400 animate-ping"></span>
+          SPEC: PK-2025
+        </span>
+<span class="hidden sm:inline text-kraft-300/80">ISO 9001:2015 &amp; FSC® Certified Structural Packaging Facility</span>
+</div>
+<div class="flex items-center gap-5 text-[11px] text-kraft-400">
+<span class="flex items-center gap-1.5">
+<svg class="w-3.5 h-3.5 text-brandblue-400" fill="none" stroke="currentColor" viewbox="0 0 24 24"><path d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"></path><path d="M15 11a3 3 0 11-6 0 3 3 0 016 0z" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"></path></svg>
+          Ghaziabad, UP, India
+        </span>
+<a class="text-brandblue-400 hover:text-white transition-colors underline-offset-2 hover:underline" href="mailto:contact@packcorepackaging.com">contact@packcorepackaging.com</a>
+</div>
+</div>
+</div>
+<!-- STICKY ARCHITECTURAL NAVBAR -->
+<header class="sticky top-0 z-50 bg-kraft-100/90 backdrop-blur-md border-b border-kraft-300 transition-all duration-300">
+<div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+<div class="flex items-center justify-between h-20">
+<!-- Logo Branding with Isometric Box Monogram -->
+<a class="flex items-center group gap-1" href="#home">
+<img alt="Packcore Packaging Logo" class="h-10 sm:h-11 w-auto object-contain transition-transform duration-300 group-hover:scale-[1.02]" src="https://lh3.googleusercontent.com/aida/AEtjO1VYmL3fZ-zAxv4y84QjXDpZnGi2xRNyByVeLUQCbEZk-5GyRu2jZVVWdGuEr0Aer8ypnlWxLht_cUVsaZ1Czcpa1YZEOlRqNwHXz_dqxJ9azgo0M_gjYhpd5s8yhAPcX1xR7oGC7KvT97SdS19IbNOE9uRfhic3Y222rYyS3o_s6uKa4AkB63nopR6OfRlWZScosAmMvZm2zcCAr1K6U2t1b3vcigJkfI5I40eV1XStfqIBwvy0GXVNQFug"/>
+</a>
+<!-- Desktop Technical Navigation -->
+<nav class="hidden md:flex items-center gap-8 text-sm font-medium text-charcoal-700">
+<a class="hover:text-brandblue-600 transition-colors py-1 relative after:content-[''] after:absolute after:bottom-0 after:left-0 after:w-0 after:h-0.5 after:bg-brandblue-600 hover:after:w-full after:transition-all" href="#home">Home</a>
+<a class="hover:text-brandblue-600 transition-colors py-1 relative after:content-[''] after:absolute after:bottom-0 after:left-0 after:w-0 after:h-0.5 after:bg-brandblue-600 hover:after:w-full after:transition-all" href="#industries">Industries</a>
+<a class="hover:text-brandblue-600 transition-colors py-1 relative after:content-[''] after:absolute after:bottom-0 after:left-0 after:w-0 after:h-0.5 after:bg-brandblue-600 hover:after:w-full after:transition-all" href="#solutions">Solutions</a>
+<a class="hover:text-brandblue-600 transition-colors py-1 relative after:content-[''] after:absolute after:bottom-0 after:left-0 after:w-0 after:h-0.5 after:bg-brandblue-600 hover:after:w-full after:transition-all" href="#about">Engineering Vision</a>
+<a class="hover:text-brandblue-600 transition-colors py-1 relative after:content-[''] after:absolute after:bottom-0 after:left-0 after:w-0 after:h-0.5 after:bg-brandblue-600 hover:after:w-full after:transition-all" href="#contact">Contact</a>
+</nav>
+<!-- Right Quick Actions -->
+<div class="hidden sm:flex items-center gap-3">
+<span class="font-mono text-xs text-charcoal-500 bg-white/70 px-2.5 py-1 rounded border border-kraft-300">CALIPER: 350 GSM</span>
+<a class="inline-flex items-center gap-2 px-5 py-2.5 rounded-lg bg-charcoal-900 hover:bg-brandblue-600 text-white font-medium text-sm transition-all duration-300 shadow-sm hover:shadow-pop-hover active:scale-95 group" href="#contact">
+<span>Get a Quote</span>
+<svg class="w-4 h-4 text-brandblue-400 group-hover:text-white transition-all duration-200 group-hover:translate-x-1" fill="none" stroke="currentColor" viewbox="0 0 24 24"><path d="M14 5l7 7m0 0l-7 7m7-7H3" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"></path></svg>
+</a>
+</div>
+<!-- Mobile Menu Toggle Button -->
+<button aria-label="Toggle Navigation Menu" class="md:hidden p-2 rounded-lg text-charcoal-800 hover:bg-kraft-300 focus:outline-none" id="mobileMenuBtn">
+<svg class="w-6 h-6" fill="none" stroke="currentColor" viewbox="0 0 24 24">
+<path d="M4 6h16M4 12h16m-7 6h7" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"></path>
+</svg>
+</button>
+</div>
+<!-- Mobile Dropdown -->
+<div class="hidden md:hidden pb-6 pt-2 border-t border-kraft-300" id="mobileMenu">
+<div class="flex flex-col gap-3 font-medium text-sm">
+<a class="px-3 py-2 rounded-md text-charcoal-800 hover:bg-kraft-200" href="#home">Home</a>
+<a class="px-3 py-2 rounded-md text-charcoal-700 hover:bg-kraft-200" href="#industries">Industries</a>
+<a class="px-3 py-2 rounded-md text-charcoal-700 hover:bg-kraft-200" href="#solutions">Solutions</a>
+<a class="px-3 py-2 rounded-md text-charcoal-700 hover:bg-kraft-200" href="#about">Engineering Vision</a>
+<a class="px-3 py-2 rounded-md text-charcoal-700 hover:bg-kraft-200" href="#contact">Contact</a>
+<a class="mt-2 text-center py-2.5 bg-brandblue-600 text-white font-semibold rounded-lg shadow" href="#contact">Get a Quote</a>
+</div>
+</div>
+</div>
+</header>
+<!-- 1. HERO SECTION WITH PURE INTERACTIVE 3D UNBOXING ENGINE -->
+<section class="relative pt-12 pb-20 lg:pt-16 lg:pb-28 dieline-blueprint overflow-hidden" id="home">
+<!-- Floating Dieline Engineering Markings -->
+<div class="absolute inset-0 pointer-events-none opacity-45">
+<div class="absolute left-8 top-16 font-mono text-[11px] text-charcoal-600 border border-dashed border-charcoal-400 px-2.5 py-1 rounded bg-white/70 rotate-[-1deg]">
+        CREASE: 0.8mm TOLERANCE • FLUTE B/E
+      </div>
+<div class="absolute right-12 top-24 font-mono text-[11px] text-brandblue-700 border border-dashed border-brandblue-400 px-3 py-1 rounded bg-white/80 rotate-2 hidden lg:block">
+        MULLEN BURST: 280+ kPa • EDGE CRUSH COMPLIANT
+      </div>
+<div class="absolute left-1/4 bottom-12 w-64 h-[1px] border-b border-dashed border-charcoal-400"></div>
+<div class="absolute right-1/4 top-1/2 w-48 h-[1px] border-b border-dashed border-brandblue-300"></div>
+</div>
+<div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
+<div class="grid grid-cols-1 lg:grid-cols-12 gap-12 lg:gap-8 items-center">
+<!-- Left: Precision Headline & Strategic Narrative -->
+<div class="lg:col-span-6">
+<!-- Dieline Spec Tag -->
+<div class="inline-flex items-center gap-2 px-3 py-1.5 rounded bg-white border border-kraft-300 shadow-sm mb-6 text-xs font-mono uppercase tracking-wider text-charcoal-700">
+<span class="w-2 h-2 rounded-full bg-brandblue-600"></span>
+            Industrial-Grade Custom Packaging Solutions
+            <span class="text-kraft-400">|</span>
+<span class="text-brandblue-600 font-bold">100% Recyclable</span>
+</div>
+<!-- Hero Headline -->
+<h1 class="text-4xl sm:text-5xl lg:text-6xl font-extrabold text-charcoal-900 tracking-tight leading-[1.08] mb-6">
+            Powering Products with <br class="hidden sm:inline"/>
+<span class="relative inline-block text-brandblue-600">
+              Better Packaging.
+              <svg class="absolute -bottom-2.5 left-0 w-full h-3 text-brandblue-600" fill="none" preserveaspectratio="none" viewbox="0 0 280 12">
+<path d="M2 9 C 80 2, 180 12, 278 4" stroke="#2563EB" stroke-dasharray="6,4" stroke-linecap="round" stroke-width="2.5"></path>
+</svg>
+</span>
+</h1>
+<!-- Subhead -->
+<p class="text-lg sm:text-xl text-charcoal-700 font-normal leading-relaxed mb-8 max-w-xl">
+            Innovative, structural packaging engineered for modern brands. Designed for transit durability, sustainable impact, and flawless customer perception.
+          </p>
+<!-- Interactive CTAs -->
+<div class="flex flex-wrap items-center gap-4 mb-10">
+<a class="inline-flex items-center justify-center px-7 py-3.5 rounded-xl bg-brandblue-600 hover:bg-brandblue-700 text-white font-semibold text-base transition-all duration-300 shadow-pop-sm hover:shadow-pop-hover hover:-translate-y-0.5 active:translate-y-0 group" href="#contact">
+<span>Get a Quote</span>
+<svg class="w-5 h-5 ml-2 transition-transform duration-200 group-hover:translate-x-1" fill="none" stroke="currentColor" viewbox="0 0 24 24"><path d="M17 8l4 4m0 0l-4 4m4-4H3" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"></path></svg>
+</a>
+<a class="inline-flex items-center justify-center px-6 py-3.5 rounded-xl bg-white hover:bg-kraft-50 text-charcoal-800 font-semibold text-base border border-kraft-300 hover:border-charcoal-700 transition-all duration-300 shadow-sm hover:shadow" href="#solutions">
+<svg class="w-5 h-5 mr-2 text-brandblue-600" fill="none" stroke="currentColor" viewbox="0 0 24 24"><path d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"></path></svg>
+              Explore Dieline Specs
+            </a>
+</div>
+<!-- Engineering Metrics Bar -->
+<div class="grid grid-cols-3 gap-4 pt-6 border-t border-kraft-300/80 max-w-lg">
+<div>
+<div class="text-2xl sm:text-3xl font-extrabold text-charcoal-900 font-mono">99.8%</div>
+<div class="text-[11px] font-mono text-charcoal-600 uppercase tracking-wider mt-0.5">Dieline Accuracy</div>
+</div>
+<div class="border-l border-kraft-300 pl-4">
+<div class="text-2xl sm:text-3xl font-extrabold text-charcoal-900 font-mono">12M+</div>
+<div class="text-[11px] font-mono text-charcoal-600 uppercase tracking-wider mt-0.5">Boxes Shipped/Mo</div>
+</div>
+<div class="border-l border-kraft-300 pl-4">
+<div class="text-2xl sm:text-3xl font-extrabold text-brandblue-600 font-mono">&lt;48h</div>
+<div class="text-[11px] font-mono text-charcoal-600 uppercase tracking-wider mt-0.5">Sample Lead Time</div>
+</div>
+</div>
+</div>
+<!-- Right: Pure 3D Interactive Cardboard Unboxing Stage + Realistic Photomockup -->
+<div class="lg:col-span-6 relative">
+<div class="relative bg-white rounded-3xl p-6 sm:p-8 border border-kraft-300 shadow-pop-card crosshair-corners">
+<!-- Stage Top Schematic Header -->
+<div class="flex items-center justify-between border-b border-dashed border-kraft-300 pb-3 mb-5">
+<div class="flex items-center gap-2">
+<span class="w-2.5 h-2.5 rounded-full bg-green-500"></span>
+<span class="font-mono text-xs font-semibold text-charcoal-800">UNBOXING STAGE 3D: KRAFT MASTER</span>
+</div>
+<button class="text-xs font-mono px-3 py-1 rounded bg-kraft-100 hover:bg-kraft-200 border border-kraft-300 text-brandblue-600 font-medium transition-colors flex items-center gap-1" id="toggleBoxBtn">
+<span>Toggle Flaps</span>
+<svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewbox="0 0 24 24"><path d="M4 4v5h.582m15.356 2A8.001 8.001 0 004.582 9m0 0H9m11 11v-5h-.581m0 0a8.003 8.003 0 01-15.357-2m15.357 2H15" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"></path></svg>
+</button>
+</div>
+<!-- Photomockup Layer with Precision Dieline Overlays -->
+<div class="relative rounded-2xl overflow-hidden bg-kraft-100 border border-kraft-300 aspect-[4/3] flex items-center justify-center group/box">
+<!-- Clean High-Res Kraft Box Render -->
+<img alt="Packcore Corrugated Cardboard Packaging Box Mockup" class="w-full h-full object-cover transition-transform duration-700 group-hover/box:scale-105" src="https://lh3.googleusercontent.com/aida/AEtjO1U-H3f3AAj23bg67smtDNemUGI9uLEqaGLSnoVhGSqGIEThd-9mOd8LnOeDe2chw_oSITGxdrFvy-aaSvmEI2r8zP5MPMiTfIv16YcFVvqwRXYm63RAG4c0DHCXgKGByfOc69vhD7y7-UpKmS4dXs9axeAWqWeex3JV3KlgGGlnZPy_X6imCJ-FA6pux44GWls3RckkdXqRmdATA6xO_MPrzR6TpW4H9FYLaCNzfQ5mysG9BRVuC-YKdDU"/>
+<!-- Technical Dieline Annotation Overlays -->
+<div class="absolute top-4 left-4 bg-charcoal-900/90 text-white font-mono text-[10px] px-2 py-1 rounded shadow-sm border border-charcoal-700 backdrop-blur-xs flex items-center gap-1.5">
+<span class="w-1.5 h-1.5 rounded-full bg-brandblue-400"></span>
+                FOLD LINE A-01 [90° CREASE]
+              </div>
+<div class="absolute bottom-4 right-4 bg-white/95 text-charcoal-900 font-mono text-[10px] px-2.5 py-1 rounded shadow-sm border border-kraft-300 backdrop-blur-xs flex items-center gap-1.5">
+<span class="text-brandblue-600 font-bold">ECT:</span> 44 lbs/in • CALIPER: 350 GSM
+              </div>
+<!-- Measurement Dimension Line Overlay -->
+<div class="absolute inset-x-8 top-1/2 pointer-events-none flex items-center justify-between opacity-0 group-hover/box:opacity-100 transition-opacity duration-300">
+<div class="w-2 h-4 border-l-2 border-brandblue-600"></div>
+<div class="flex-1 border-t-2 border-dashed border-brandblue-600 relative flex items-center justify-center">
+<span class="bg-brandblue-600 text-white text-[9px] font-mono px-2 py-0.5 rounded -translate-y-3">WIDTH: 320mm ±0.4mm</span>
+</div>
+<div class="w-2 h-4 border-r-2 border-brandblue-600"></div>
+</div>
+</div>
+<!-- Interactive CSS 3D Model Teaser / Spec Bar -->
+<div class="mt-4 pt-3 border-t border-kraft-200 grid grid-cols-3 gap-2 text-center text-xs font-mono">
+<div class="p-2 rounded bg-kraft-50 border border-kraft-200">
+<div class="text-[10px] text-charcoal-500 uppercase">Flute Type</div>
+<div class="font-bold text-charcoal-900">B/E Micro-Flute</div>
+</div>
+<div class="p-2 rounded bg-kraft-50 border border-kraft-200">
+<div class="text-[10px] text-charcoal-500 uppercase">Board Caliper</div>
+<div class="font-bold text-charcoal-900">Virgin Kraft 350g</div>
+</div>
+<div class="p-2 rounded bg-kraft-50 border border-kraft-200">
+<div class="text-[10px] text-charcoal-500 uppercase">Closure</div>
+<div class="font-bold text-brandblue-600">Crash Lock Base</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+</section>
+<!-- STRUCTURAL FLAP SECTION DIVIDER 1 -->
+<div class="w-full relative h-10 overflow-hidden bg-kraft-200 flex items-center justify-center">
+<svg class="w-full h-10 text-white fill-current" preserveaspectratio="none" viewbox="0 0 1200 40">
+<!-- Packaging Interlocking Tab Shape -->
+<path d="M0,0 L450,0 L470,26 L730,26 L750,0 L1200,0 L1200,40 L0,40 Z"></path>
+</svg>
+<div class="absolute font-mono text-[9px] text-charcoal-500 tracking-widest uppercase -translate-y-1">
+      DIELINE CUT MARGIN • SECTION 02
+    </div>
+</div>
+<!-- 2. ABOUT US / MANUFACTURING PHILOSOPHY -->
+<section class="py-20 lg:py-28 bg-white relative" id="about">
+<div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+<!-- Section Header -->
+<div class="max-w-3xl mx-auto text-center mb-16">
+<div class="inline-flex items-center gap-1.5 px-3 py-1 rounded bg-kraft-200 text-charcoal-800 font-mono text-xs uppercase tracking-wider mb-3">
+          Manufacturing Philosophy &amp; Vision
+        </div>
+<h2 class="text-3xl sm:text-4xl lg:text-5xl font-extrabold text-charcoal-900 tracking-tight">
+          Engineered for Protection. <br/>Crafted for Unboxing.
+        </h2>
+</div>
+<!-- Main Promise Container (Architectural Card) -->
+<div class="relative bg-kraft-100/60 border border-kraft-300 rounded-3xl p-8 sm:p-12 lg:p-14 shadow-pop-card crosshair-corners overflow-hidden">
+<div class="grid grid-cols-1 lg:grid-cols-12 gap-10 items-center">
+<div class="lg:col-span-7">
+<div class="font-mono text-xs text-brandblue-600 font-bold uppercase tracking-widest mb-3">
+              THE PACKCORE ENGINEERING PROMISE
+            </div>
+<blockquote class="text-xl sm:text-2xl font-bold text-charcoal-900 leading-snug mb-6">
+              "We believe packaging is not just about protecting a product—it is an essential bridge between industrial performance and brand emotion."
+            </blockquote>
+<div class="space-y-4 text-charcoal-700 text-base leading-relaxed">
+<p>
+<strong class="text-charcoal-900 font-semibold">Packcore Packaging</strong> focuses on consistent quality and efficient manufacturing processes. We combine modern corrugation technology with practical structural expertise to eliminate damage during transit while elevating customer unboxing.
+              </p>
+<p>
+                Every dieline profile, crease channel, and corrugated wall leaving our Ghaziabad hub is calibrated for high compressive strength, strict Edge Crush Test (ECT) compliance, and smooth tactile flap folding.
+              </p>
+</div>
+<!-- Testing Standard Badges -->
+<div class="grid grid-cols-1 sm:grid-cols-3 gap-3 pt-6 mt-6 border-t border-kraft-300 font-mono text-xs text-charcoal-800">
+<div class="flex items-center gap-2 p-2.5 rounded-lg bg-white border border-kraft-300">
+<span class="w-2 h-2 rounded-full bg-brandblue-600"></span>
+<span>Zero Delamination</span>
+</div>
+<div class="flex items-center gap-2 p-2.5 rounded-lg bg-white border border-kraft-300">
+<span class="w-2 h-2 rounded-full bg-brandblue-600"></span>
+<span>FSC® Certified</span>
+</div>
+<div class="flex items-center gap-2 p-2.5 rounded-lg bg-white border border-kraft-300">
+<span class="w-2 h-2 rounded-full bg-brandblue-600"></span>
+<span>Inline Caliper QC</span>
+</div>
+</div>
+</div>
+<!-- Right Column: Certified Box Maker Certificate -->
+<div class="lg:col-span-5 flex flex-col gap-4">
+<!-- Standard Circular Box Certificate Stamp Representation -->
+<div class="bg-white p-6 rounded-2xl border-2 border-dashed border-charcoal-400 shadow-sm relative text-center">
+<div class="absolute -top-3 left-1/2 -translate-x-1/2 bg-charcoal-900 text-white font-mono text-[10px] font-bold px-3 py-0.5 rounded">
+                BOX CERTIFICATE STAMP
+              </div>
+<div class="w-48 h-48 mx-auto rounded-full border-2 border-charcoal-800 p-3 flex flex-col items-center justify-center my-2 text-charcoal-800">
+<div class="text-[9px] font-mono uppercase tracking-widest text-charcoal-500">PACKCORE PACKAGING</div>
+<div class="font-bold text-xs uppercase my-0.5">SINGLEWALL CORRUGATED</div>
+<div class="w-full border-t border-charcoal-300 my-1"></div>
+<div class="text-[10px] font-mono">BURSTING TEST: <strong class="text-charcoal-900">200 LBS</strong></div>
+<div class="text-[10px] font-mono">MIN COMB WT: <strong class="text-charcoal-900">84 LBS</strong></div>
+<div class="text-[10px] font-mono">SIZE LIMIT: <strong class="text-charcoal-900">75 INCHES</strong></div>
+<div class="w-full border-t border-charcoal-300 my-1"></div>
+<div class="text-[9px] font-mono text-brandblue-600 font-bold">Ghaziabad, INDIA</div>
+</div>
+<div class="text-[11px] font-mono text-charcoal-500 mt-2">
+                Meets or exceeds all Indian &amp; International freight handling parameters.
+              </div>
+</div>
+<!-- Eco Kraft Statement -->
+<div class="bg-kraft-200/80 p-4 rounded-xl border border-kraft-300 flex items-center gap-3">
+<div class="w-10 h-10 rounded-lg bg-white flex items-center justify-center text-green-600 shrink-0 font-bold text-lg border border-kraft-300">
+                ♻
+              </div>
+<div class="text-xs text-charcoal-700">
+<span class="font-bold text-charcoal-900 block font-mono">100% Circular Lifecycle</span>
+                Water-soluble adhesives and non-toxic repulpable kraft fibers.
+              </div>
+</div>
+</div>
+</div>
+</div>
+</div>
+</section>
+<!-- STRUCTURAL FLAP SECTION DIVIDER 2 -->
+<div class="w-full relative h-10 overflow-hidden bg-white flex items-center justify-center">
+<svg class="w-full h-10 text-kraft-100 fill-current" preserveaspectratio="none" viewbox="0 0 1200 40">
+<path d="M0,0 L350,0 L380,24 L820,24 L850,0 L1200,0 L1200,40 L0,40 Z"></path>
+</svg>
+<div class="absolute font-mono text-[9px] text-charcoal-500 tracking-widest uppercase -translate-y-1">
+      INTERLOCKING FLAP FOLD • SECTION 03
+    </div>
+</div>
+<!-- 3. INDUSTRIES SERVED (6-CARD INTERACTIVE GRID) -->
+<section class="py-20 lg:py-28 dieline-blueprint-subtle relative" id="industries">
+<div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+<!-- Section Heading -->
+<div class="flex flex-col md:flex-row md:items-end justify-between mb-16 gap-6">
+<div>
+<div class="inline-flex items-center gap-1.5 px-3 py-1 rounded bg-brandblue-50 text-brandblue-700 font-mono text-xs uppercase tracking-wider mb-3 border border-brandblue-200">
+            Market Sectors
+          </div>
+<h2 class="text-3xl sm:text-4xl lg:text-5xl font-extrabold text-charcoal-900 tracking-tight">
+            Industries We Serve
+          </h2>
+<p class="text-charcoal-600 mt-3 text-base sm:text-lg max-w-xl">
+            Custom corrugated dielines, folding cartons, and freight shippers calibrated to sector-specific transit dynamics.
+          </p>
+</div>
+<div class="font-mono text-xs text-charcoal-500 bg-white px-4 py-2 rounded-lg border border-kraft-300 self-start md:self-end">
+          6 SPECIALIZED SECTORS
+        </div>
+</div>
+<!-- 6-Card Grid with Tactical Drop Shadow and Corner Crosshairs -->
+<div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 sm:gap-8">
+<!-- 1. FMCG -->
+<div class="tactical-pop crosshair-corners bg-white rounded-2xl p-7 border border-kraft-300 shadow-sm relative overflow-hidden group">
+<div class="flex items-center justify-between mb-6">
+<div class="w-12 h-12 rounded-xl bg-kraft-100 flex items-center justify-center text-brandblue-600 border border-kraft-300 group-hover:bg-brandblue-600 group-hover:text-white transition-colors duration-300">
+<svg class="w-6 h-6" fill="none" stroke="currentColor" viewbox="0 0 24 24"><path d="M16 11V7a4 4 0 00-8 0v4M5 9h14l1 12H4L5 9z" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"></path></svg>
+</div>
+<span class="font-mono text-xs text-charcoal-400 uppercase tracking-widest">IND-01</span>
+</div>
+<h3 class="text-xl font-bold text-charcoal-900 mb-2 group-hover:text-brandblue-600 transition-colors">FMCG Packaging</h3>
+<p class="text-sm text-charcoal-600 leading-relaxed mb-6">
+            High-speed production runs with moisture-resistant barriers, crisp offset litho-laminated graphics, and shelf-ready retail perforations.
+          </p>
+<div class="pt-4 border-t border-dashed border-kraft-200 flex items-center justify-between text-xs font-mono text-charcoal-700">
+<span>High Volume Production</span>
+<span class="text-brandblue-600 font-semibold group-hover:translate-x-1 transition-transform">Spec Sheet →</span>
+</div>
+</div>
+<!-- 2. E-Commerce -->
+<div class="tactical-pop crosshair-corners bg-white rounded-2xl p-7 border border-kraft-300 shadow-sm relative overflow-hidden group">
+<div class="flex items-center justify-between mb-6">
+<div class="w-12 h-12 rounded-xl bg-kraft-100 flex items-center justify-center text-brandblue-600 border border-kraft-300 group-hover:bg-brandblue-600 group-hover:text-white transition-colors duration-300">
+<svg class="w-6 h-6" fill="none" stroke="currentColor" viewbox="0 0 24 24"><path d="M20 7l-8-4-8 4m16 0l-8 4m8-4v10l-8 4m0-10L4 7m8 4v10M4 7v10l8 4" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"></path></svg>
+</div>
+<span class="font-mono text-xs text-charcoal-400 uppercase tracking-widest">IND-02</span>
+</div>
+<h3 class="text-xl font-bold text-charcoal-900 mb-2 group-hover:text-brandblue-600 transition-colors">E-Commerce &amp; D2C</h3>
+<p class="text-sm text-charcoal-600 leading-relaxed mb-6">
+            Self-locking roll-end mailers, intuitive tear-strip pull tabs, and tamper-evident closures built for an unforgettable unboxing experience.
+          </p>
+<div class="pt-4 border-t border-dashed border-kraft-200 flex items-center justify-between text-xs font-mono text-charcoal-700">
+<span>Tear-Strip Flaps</span>
+<span class="text-brandblue-600 font-semibold group-hover:translate-x-1 transition-transform">Spec Sheet →</span>
+</div>
+</div>
+<!-- 3. Retail -->
+<div class="tactical-pop crosshair-corners bg-white rounded-2xl p-7 border border-kraft-300 shadow-sm relative overflow-hidden group">
+<div class="flex items-center justify-between mb-6">
+<div class="w-12 h-12 rounded-xl bg-kraft-100 flex items-center justify-center text-brandblue-600 border border-kraft-300 group-hover:bg-brandblue-600 group-hover:text-white transition-colors duration-300">
+<svg class="w-6 h-6" fill="none" stroke="currentColor" viewbox="0 0 24 24"><path d="M7 21a4 4 0 01-4-4V5a2 2 0 012-2h4a2 2 0 012 2v12a4 4 0 01-4 4zm0 0h12a2 2 0 002-2v-4a2 2 0 00-2-2h-2.343M11 7.343l1.657-1.657a2 2 0 012.828 0l2.829 2.829a2 2 0 010 2.828l-8.486 8.485M7 17h.01" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"></path></svg>
+</div>
+<span class="font-mono text-xs text-charcoal-400 uppercase tracking-widest">IND-03</span>
+</div>
+<h3 class="text-xl font-bold text-charcoal-900 mb-2 group-hover:text-brandblue-600 transition-colors">Retail Displays</h3>
+<p class="text-sm text-charcoal-600 leading-relaxed mb-6">
+            Point-of-sale display trays, counter units (CDUs), and premium rigid presentation boxes designed for immediate customer engagement.
+          </p>
+<div class="pt-4 border-t border-dashed border-kraft-200 flex items-center justify-between text-xs font-mono text-charcoal-700">
+<span>Rigid &amp; POS</span>
+<span class="text-brandblue-600 font-semibold group-hover:translate-x-1 transition-transform">Spec Sheet →</span>
+</div>
+</div>
+<!-- 4. Food -->
+<div class="tactical-pop crosshair-corners bg-white rounded-2xl p-7 border border-kraft-300 shadow-sm relative overflow-hidden group">
+<div class="flex items-center justify-between mb-6">
+<div class="w-12 h-12 rounded-xl bg-kraft-100 flex items-center justify-center text-brandblue-600 border border-kraft-300 group-hover:bg-brandblue-600 group-hover:text-white transition-colors duration-300">
+<svg class="w-6 h-6" fill="none" stroke="currentColor" viewbox="0 0 24 24"><path d="M3 6l3 1m0 0l-3 9a5.002 5.002 0 006.001 0M6 7l3 9M6 7l6-2m6 2l3-1m-3 1l-3 9a5.002 5.002 0 006.001 0M18 7l3 9m-3-9l-6-2m0-2v2m0 16V5m0 16H9m3 0h3" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"></path></svg>
+</div>
+<span class="font-mono text-xs text-charcoal-400 uppercase tracking-widest">IND-04</span>
+</div>
+<h3 class="text-xl font-bold text-charcoal-900 mb-2 group-hover:text-brandblue-600 transition-colors">Food &amp; Beverage</h3>
+<p class="text-sm text-charcoal-600 leading-relaxed mb-6">
+            Certified direct-contact food-grade paperboard, grease barriers, and corrugated insulated trays meeting international food safety compliance.
+          </p>
+<div class="pt-4 border-t border-dashed border-kraft-200 flex items-center justify-between text-xs font-mono text-charcoal-700">
+<span>Food-Grade Certified</span>
+<span class="text-brandblue-600 font-semibold group-hover:translate-x-1 transition-transform">Spec Sheet →</span>
+</div>
+</div>
+<!-- 5. Pharmaceuticals -->
+<div class="tactical-pop crosshair-corners bg-white rounded-2xl p-7 border border-kraft-300 shadow-sm relative overflow-hidden group">
+<div class="flex items-center justify-between mb-6">
+<div class="w-12 h-12 rounded-xl bg-kraft-100 flex items-center justify-center text-brandblue-600 border border-kraft-300 group-hover:bg-brandblue-600 group-hover:text-white transition-colors duration-300">
+<svg class="w-6 h-6" fill="none" stroke="currentColor" viewbox="0 0 24 24"><path d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"></path></svg>
+</div>
+<span class="font-mono text-xs text-charcoal-400 uppercase tracking-widest">IND-05</span>
+</div>
+<h3 class="text-xl font-bold text-charcoal-900 mb-2 group-hover:text-brandblue-600 transition-colors">Pharmaceuticals</h3>
+<p class="text-sm text-charcoal-600 leading-relaxed mb-6">
+            Precision folding cartons with Braille embossing options, secure tamper-evident tabs, serialized barcode integration, and batch traceability.
+          </p>
+<div class="pt-4 border-t border-dashed border-kraft-200 flex items-center justify-between text-xs font-mono text-charcoal-700">
+<span>Tamper-Evident</span>
+<span class="text-brandblue-600 font-semibold group-hover:translate-x-1 transition-transform">Spec Sheet →</span>
+</div>
+</div>
+<!-- 6. Heavy Manufacturing -->
+<div class="tactical-pop crosshair-corners bg-white rounded-2xl p-7 border border-kraft-300 shadow-sm relative overflow-hidden group">
+<div class="flex items-center justify-between mb-6">
+<div class="w-12 h-12 rounded-xl bg-kraft-100 flex items-center justify-center text-brandblue-600 border border-kraft-300 group-hover:bg-brandblue-600 group-hover:text-white transition-colors duration-300">
+<svg class="w-6 h-6" fill="none" stroke="currentColor" viewbox="0 0 24 24"><path d="M19 21V5a2 2 0 00-2-2H7a2 2 0 00-2 2v16m14 0h2m-2 0h-5m-9 0H3m2 0h5M9 7h1m-1 4h1m4-4h1m-1 4h1m-5 10v-5a1 1 0 011-1h2a1 1 0 011 1v5m-4 0h4" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"></path></svg>
+</div>
+<span class="font-mono text-xs text-charcoal-400 uppercase tracking-widest">IND-06</span>
+</div>
+<h3 class="text-xl font-bold text-charcoal-900 mb-2 group-hover:text-brandblue-600 transition-colors">Heavy Manufacturing</h3>
+<p class="text-sm text-charcoal-600 leading-relaxed mb-6">
+            Double and triple-wall corrugated master cartons, heavy-duty internal partitions, and custom engineered protective void fills.
+          </p>
+<div class="pt-4 border-t border-dashed border-kraft-200 flex items-center justify-between text-xs font-mono text-charcoal-700">
+<span>Triple-Wall Strength</span>
+<span class="text-brandblue-600 font-semibold group-hover:translate-x-1 transition-transform">Spec Sheet →</span>
+</div>
+</div>
+</div>
+</div>
+</section>
+<!-- STRUCTURAL FLAP SECTION DIVIDER 3 -->
+<div class="w-full relative h-10 overflow-hidden bg-kraft-100 flex items-center justify-center">
+<svg class="w-full h-10 text-white fill-current" preserveaspectratio="none" viewbox="0 0 1200 40">
+<path d="M0,0 L500,0 L520,24 L680,24 L700,0 L1200,0 L1200,40 L0,40 Z"></path>
+</svg>
+<div class="absolute font-mono text-[9px] text-charcoal-500 tracking-widest uppercase -translate-y-1">
+      ENGINEERING PILLARS • SECTION 04
+    </div>
+</div>
+<!-- 4. OUR SOLUTIONS (FOUR ICON-BASED COLUMNS) -->
+<section class="py-20 lg:py-28 bg-white relative" id="solutions">
+<div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+<!-- Section Header -->
+<div class="text-center max-w-3xl mx-auto mb-16">
+<div class="inline-flex items-center gap-1.5 px-3 py-1 rounded bg-kraft-200 text-charcoal-800 font-mono text-xs uppercase tracking-wider mb-3">
+          Core Engineering Pillars
+        </div>
+<h2 class="text-3xl sm:text-4xl lg:text-5xl font-extrabold text-charcoal-900 tracking-tight">
+          Packaging Designed Around Your Product
+        </h2>
+<p class="text-charcoal-600 mt-4 text-base sm:text-lg">
+          Four foundational principles dictate every dieline cut, flute selection, and adhesive joint we manufacture.
+        </p>
+</div>
+<!-- 4 Columns Grid -->
+<div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8">
+<!-- Pillar 01: Durability -->
+<div class="tactical-pop crosshair-corners bg-kraft-50/70 rounded-2xl p-7 border border-kraft-300 relative">
+<div class="w-14 h-14 rounded-xl bg-white border border-kraft-300 shadow-sm flex items-center justify-center text-brandblue-600 mb-6">
+<svg class="w-7 h-7" fill="none" stroke="currentColor" viewbox="0 0 24 24"><path d="M19 11H5m14 0a2 2 0 012 2v6a2 2 0 01-2 2H5a2 2 0 01-2-2v-6a2 2 0 012-2m14 0V9a2 2 0 00-2-2M5 11V9a2 2 0 012-2m0 0V5a2 2 0 012-2h6a2 2 0 012 2v2M7 7h10" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"></path></svg>
+</div>
+<div class="text-xs font-mono text-brandblue-600 font-bold uppercase tracking-wider mb-1">PILLAR 01</div>
+<h3 class="text-xl font-bold text-charcoal-900 mb-3">Durability</h3>
+<p class="text-sm text-charcoal-600 leading-relaxed mb-4">
+            Tested under extreme stacking loads and transit vibration. High Mullen burst strength corrugated walls eliminate crushing.
+          </p>
+<ul class="text-xs font-mono text-charcoal-700 space-y-1.5 pt-3 border-t border-dashed border-kraft-300">
+<li>• High Edge Crush Test (ECT)</li>
+<li>• Calibrated flute resilience</li>
+</ul>
+</div>
+<!-- Pillar 02: Protection -->
+<div class="tactical-pop crosshair-corners bg-kraft-50/70 rounded-2xl p-7 border border-kraft-300 relative">
+<div class="w-14 h-14 rounded-xl bg-white border border-kraft-300 shadow-sm flex items-center justify-center text-brandblue-600 mb-6">
+<svg class="w-7 h-7" fill="none" stroke="currentColor" viewbox="0 0 24 24"><path d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"></path></svg>
+</div>
+<div class="text-xs font-mono text-brandblue-600 font-bold uppercase tracking-wider mb-1">PILLAR 02</div>
+<h3 class="text-xl font-bold text-charcoal-900 mb-3">Protection</h3>
+<p class="text-sm text-charcoal-600 leading-relaxed mb-4">
+            Comprehensive defense against impact shocks, humidity, and abrasion. Custom internal inserts hold products firmly in place.
+          </p>
+<ul class="text-xs font-mono text-charcoal-700 space-y-1.5 pt-3 border-t border-dashed border-kraft-300">
+<li>• Precision die-cut dividers</li>
+<li>• Anti-scratch coatings</li>
+</ul>
+</div>
+<!-- Pillar 03: Convenience -->
+<div class="tactical-pop crosshair-corners bg-kraft-50/70 rounded-2xl p-7 border border-kraft-300 relative">
+<div class="w-14 h-14 rounded-xl bg-white border border-kraft-300 shadow-sm flex items-center justify-center text-brandblue-600 mb-6">
+<svg class="w-7 h-7" fill="none" stroke="currentColor" viewbox="0 0 24 24"><path d="M13 10V3L4 14h7v7l9-11h-7z" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"></path></svg>
+</div>
+<div class="text-xs font-mono text-brandblue-600 font-bold uppercase tracking-wider mb-1">PILLAR 03</div>
+<h3 class="text-xl font-bold text-charcoal-900 mb-3">Convenience</h3>
+<p class="text-sm text-charcoal-600 leading-relaxed mb-4">
+            Rapid setup mechanics with crash-lock automatic bottoms, integrated peel-and-seal strips, and intuitive unboxing pull tabs.
+          </p>
+<ul class="text-xs font-mono text-charcoal-700 space-y-1.5 pt-3 border-t border-dashed border-kraft-300">
+<li>• Auto crash-lock bases</li>
+<li>• Tool-free frustrationless open</li>
+</ul>
+</div>
+<!-- Pillar 04: Professional Presentation -->
+<div class="tactical-pop crosshair-corners bg-kraft-50/70 rounded-2xl p-7 border border-kraft-300 relative">
+<div class="w-14 h-14 rounded-xl bg-white border border-kraft-300 shadow-sm flex items-center justify-center text-brandblue-600 mb-6">
+<svg class="w-7 h-7" fill="none" stroke="currentColor" viewbox="0 0 24 24"><path d="M5 3v4M3 5h4M6 17v4m-2-2h4m5-16l2.286 6.857L21 12l-5.714 2.143L13 21l-2.286-6.857L5 12l5.714-2.143L13 3z" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"></path></svg>
+</div>
+<div class="text-xs font-mono text-brandblue-600 font-bold uppercase tracking-wider mb-1">PILLAR 04</div>
+<h3 class="text-xl font-bold text-charcoal-900 mb-3">Professional Presentation</h3>
+<p class="text-sm text-charcoal-600 leading-relaxed mb-4">
+            Transform routine deliveries into premium customer moments. Crisp color registration, matte spot UV, and crisp embossing.
+          </p>
+<ul class="text-xs font-mono text-charcoal-700 space-y-1.5 pt-3 border-t border-dashed border-kraft-300">
+<li>• Spot UV &amp; Foil Stamping</li>
+<li>• Crisp structural lines</li>
+</ul>
+</div>
+</div>
+<!-- Custom Prototyping Laboratory Action Banner -->
+<div class="mt-16 bg-charcoal-900 rounded-2xl p-6 sm:p-8 text-white flex flex-col md:flex-row items-center justify-between gap-6 border border-charcoal-700 shadow-pop-card">
+<div>
+<div class="text-brandblue-400 font-mono text-xs uppercase mb-1 tracking-wider">Custom Prototyping Laboratory</div>
+<h4 class="text-xl sm:text-2xl font-bold">Need a custom dieline sample before mass manufacturing?</h4>
+<p class="text-kraft-300 text-sm mt-1 max-w-xl">Send us your CAD files or physical product dimensions. We craft rapid structural unboxing mockups in under 48 hours.</p>
+</div>
+<a class="px-6 py-3.5 rounded-xl bg-brandblue-600 hover:bg-brandblue-500 text-white font-bold text-sm whitespace-nowrap transition-all shadow-md hover:shadow-pop-hover" href="#contact">
+          Contact Us
+        </a>
+</div>
+</div>
+</section>
+<!-- 5. FOOTER / CONTACT SECTION: AUTHENTIC SHIPPING LABEL ON CARDBOARD -->
+<footer class="bg-kraft-300/80 pt-16 pb-12 relative dieline-blueprint border-t border-kraft-400" id="contact">
+<div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+<!-- SHIPPING LABEL CONTAINER -->
+<div class="bg-white rounded-3xl p-6 sm:p-10 lg:p-12 border-2 border-charcoal-900 shadow-shipping-label relative overflow-hidden max-w-5xl mx-auto crosshair-corners">
+<!-- Top Shipping Band -->
+<div class="border-b-2 border-charcoal-900 pb-5 mb-8 flex flex-wrap items-center justify-between gap-4">
+<div class="flex items-center gap-4">
+<div class="px-3 py-1.5 bg-charcoal-900 text-white font-mono font-bold text-xs tracking-wider rounded">
+              EXPRESS FREIGHT BILL
+            </div>
+<div class="font-mono text-xs text-charcoal-600">
+              TRACKING ID: <span class="font-bold text-charcoal-900">TRK: PK-IND-90218-X</span>
+</div>
+</div>
+<!-- Barcode Graphic -->
+<div class="flex items-center gap-3">
+<div class="w-36 h-9 shipping-barcode border border-charcoal-800 rounded-sm"></div>
+<span class="font-mono text-[10px] text-charcoal-500 hidden sm:inline">*PACKCORE*</span>
+</div>
+</div>
+<!-- Shipping Label Content Split -->
+<div class="grid grid-cols-1 lg:grid-cols-12 gap-10">
+<!-- Left: Sender Info & Direct Sales Contact -->
+<div class="lg:col-span-5 space-y-6 border-b lg:border-b-0 lg:border-r border-dashed border-charcoal-300 pb-8 lg:pb-0 lg:pr-8">
+<div>
+<div class="text-[10px] font-mono text-charcoal-500 uppercase tracking-widest mb-1.5">MANUFACTURING ORIGIN:</div>
+<div class="flex items-center gap-2 mb-2">
+<img alt="Packcore Logo" class="h-8 w-auto object-contain" src="https://lh3.googleusercontent.com/aida/AEtjO1VYmL3fZ-zAxv4y84QjXDpZnGi2xRNyByVeLUQCbEZk-5GyRu2jZVVWdGuEr0Aer8ypnlWxLht_cUVsaZ1Czcpa1YZEOlRqNwHXz_dqxJ9azgo0M_gjYhpd5s8yhAPcX1xR7oGC7KvT97SdS19IbNOE9uRfhic3Y222rYyS3o_s6uKa4AkB63nopR6OfRlWZScosAmMvZm2zcCAr1K6U2t1b3vcigJkfI5I40eV1XStfqIBwvy0GXVNQFug"/>
+</div>
+<p class="text-xs text-charcoal-600 font-mono leading-relaxed">
+                PACKCORE PACKAGING MANUFACTURING CORP.<br/>
+                Industrial Packaging Hub, Ghaziabad<br/>
+                Uttar Pradesh 201310, India
+              </p>
+</div>
+<!-- Direct Contact Card for Avinash Thakur -->
+<div class="bg-kraft-100 p-4 rounded-xl border border-kraft-300">
+<div class="text-[10px] font-mono text-brandblue-600 uppercase font-bold tracking-wider mb-1">DIRECT SALES &amp; MARKETING LEAD</div>
+<div class="text-lg font-bold text-charcoal-900">Avinash Thakur</div>
+<div class="text-xs text-charcoal-600 font-medium">Head of Sales &amp; Strategic Marketing</div>
+<div class="mt-3 pt-3 border-t border-kraft-300 space-y-2 text-xs font-mono">
+<div class="flex items-center gap-2 text-charcoal-800">
+<svg class="w-4 h-4 text-brandblue-600 shrink-0" fill="none" stroke="currentColor" viewbox="0 0 24 24"><path d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"></path></svg>
+<a class="text-brandblue-600 hover:underline" href="mailto:contact@packcorepackaging.com">contact@packcorepackaging.com</a>
+</div>
+<div class="flex items-center gap-2 text-charcoal-800">
+<svg class="w-4 h-4 text-brandblue-600 shrink-0" fill="none" stroke="currentColor" viewbox="0 0 24 24"><path d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"></path></svg>
+<span>Ghaziabad, Uttar Pradesh, India</span>
+</div>
+</div>
+</div>
+<!-- Compliance Seals -->
+<div class="pt-2">
+<div class="text-[10px] font-mono text-charcoal-500 uppercase tracking-widest mb-2">VERIFIED COMPLIANCE:</div>
+<div class="flex flex-wrap gap-2 text-[11px] font-mono">
+<span class="px-2.5 py-1 bg-white border border-charcoal-300 rounded font-semibold text-charcoal-700">FSC® C12894</span>
+<span class="px-2.5 py-1 bg-white border border-charcoal-300 rounded font-semibold text-charcoal-700">ISO 9001:2015</span>
+<span class="px-2.5 py-1 bg-white border border-charcoal-300 rounded font-semibold text-charcoal-700">ROHS Compliant</span>
+</div>
+</div>
+</div>
+<!-- Right: Message Us Inquiry Form -->
+<div class="lg:col-span-7">
+<div class="mb-4">
+<div class="text-[10px] font-mono text-brandblue-600 uppercase font-bold tracking-widest">TRANSMIT PACKAGING BRIEF</div>
+<h3 class="text-2xl font-extrabold text-charcoal-900">Message Our Packaging Engineers</h3>
+<p class="text-xs text-charcoal-600 mt-1">Get custom quotes, dieline consultation, and production estimates within 4 business hours.</p>
+</div>
+<form class="space-y-4" id="quoteForm" onsubmit="event.preventDefault(); alert('Thank you! Your quote request has been transmitted directly to Avinash Thakur and the Packcore engineering team.');">
+<div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+<div>
+<label class="block text-xs font-mono font-bold text-charcoal-700 uppercase mb-1">Your Full Name *</label>
+<input class="w-full px-3.5 py-2.5 bg-kraft-50 border border-charcoal-300 rounded-lg text-sm text-charcoal-900 focus:outline-none focus:ring-2 focus:ring-brandblue-600 focus:border-brandblue-600" placeholder="e.g. Rahul Sharma" required="" type="text"/>
+</div>
+<div>
+<label class="block text-xs font-mono font-bold text-charcoal-700 uppercase mb-1">Business Email *</label>
+<input class="w-full px-3.5 py-2.5 bg-kraft-50 border border-charcoal-300 rounded-lg text-sm text-charcoal-900 focus:outline-none focus:ring-2 focus:ring-brandblue-600 focus:border-brandblue-600" placeholder="rahul@company.com" required="" type="email"/>
+</div>
+</div>
+<div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+<div>
+<label class="block text-xs font-mono font-bold text-charcoal-700 uppercase mb-1">Industry Sector</label>
+<select class="w-full px-3.5 py-2.5 bg-kraft-50 border border-charcoal-300 rounded-lg text-sm text-charcoal-900 focus:outline-none focus:ring-2 focus:ring-brandblue-600 focus:border-brandblue-600">
+<option>E-Commerce &amp; D2C</option>
+<option>FMCG Consumer Goods</option>
+<option>Retail Display &amp; Rigid Boxes</option>
+<option>Food &amp; Beverage</option>
+<option>Pharmaceuticals</option>
+<option>Heavy Manufacturing / Corrugated</option>
+</select>
+</div>
+<div>
+<label class="block text-xs font-mono font-bold text-charcoal-700 uppercase mb-1">Estimated Monthly Volume</label>
+<select class="w-full px-3.5 py-2.5 bg-kraft-50 border border-charcoal-300 rounded-lg text-sm text-charcoal-900 focus:outline-none focus:ring-2 focus:ring-brandblue-600 focus:border-brandblue-600">
+<option>5,000 – 25,000 units</option>
+<option>25,000 – 100,000 units</option>
+<option>100,000 – 500,000 units</option>
+<option>500,000+ units (Enterprise)</option>
+</select>
+</div>
+</div>
+<div>
+<label class="block text-xs font-mono font-bold text-charcoal-700 uppercase mb-1">Packaging Specifications &amp; Requirements</label>
+<textarea class="w-full px-3.5 py-2.5 bg-kraft-50 border border-charcoal-300 rounded-lg text-sm text-charcoal-900 focus:outline-none focus:ring-2 focus:ring-brandblue-600 focus:border-brandblue-600" placeholder="Provide box dimensions (L×W×H), preferred flute type, custom printing, or dieline notes..." rows="3"></textarea>
+</div>
+<div class="flex flex-col sm:flex-row items-center justify-between gap-4 pt-2">
+<div class="text-[11px] font-mono text-charcoal-500">
+                  🔒 Confidential NDA Protected Specification Submission
+                </div>
+<button class="w-full sm:w-auto px-8 py-3.5 bg-charcoal-900 hover:bg-brandblue-600 text-white font-bold text-sm rounded-xl transition-all duration-300 shadow-md hover:shadow-pop-hover flex items-center justify-center gap-2 group" type="submit">
+<span>Dispatch Message</span>
+<svg class="w-4 h-4 transition-transform group-hover:translate-x-1" fill="none" stroke="currentColor" viewbox="0 0 24 24"><path d="M14 5l7 7m0 0l-7 7m7-7H3" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"></path></svg>
+</button>
+</div>
+</form>
+</div>
+</div>
+<!-- Footer Bottom Stamp Line -->
+<div class="mt-8 pt-4 border-t-2 border-dashed border-charcoal-300 flex flex-wrap items-center justify-between text-[11px] font-mono text-charcoal-500">
+<div>© 2025 Packcore Packaging. All rights reserved. Powering Products with Better Packaging.</div>
+<div class="flex items-center gap-4 mt-2 sm:mt-0">
+<a class="hover:text-brandblue-600" href="#">Dieline Library</a>
+<a class="hover:text-brandblue-600" href="#">Material Specs</a>
+<a class="hover:text-brandblue-600" href="#">Privacy Policy</a>
+</div>
+</div>
+</div>
+</div>
+</footer>
+<!-- INTERACTIVE SCRIPTS: 3D BOX FLAP TOGGLE & SCROLL INTERSECTIONS -->
+<script>
+    document.addEventListener('DOMContentLoaded', () => {
+      // Mobile Menu Toggle
+      const menuBtn = document.getElementById('mobileMenuBtn');
+      const mobileMenu = document.getElementById('mobileMenu');
+
+      if (menuBtn && mobileMenu) {
+        menuBtn.addEventListener('click', () => {
+          mobileMenu.classList.toggle('hidden');
+        });
+
+        mobileMenu.querySelectorAll('a').forEach(link => {
+          link.addEventListener('click', () => {
+            mobileMenu.classList.add('hidden');
+          });
+        });
+      }
+
+      // 3D Box Interactive Flap Toggle Demonstration
+      const toggleBtn = document.getElementById('toggleBoxBtn');
+      let isFlapFolded = false;
+      if (toggleBtn) {
+        toggleBtn.addEventListener('click', () => {
+          isFlapFolded = !isFlapFolded;
+          toggleBtn.classList.toggle('bg-brandblue-50', isFlapFolded);
+          toggleBtn.classList.toggle('text-brandblue-700', isFlapFolded);
+          const boxImg = document.querySelector('.group\\/box img');
+          if (boxImg) {
+            boxImg.style.transition = 'transform 0.5s cubic-bezier(0.34, 1.56, 0.64, 1)';
+            boxImg.style.transform = isFlapFolded ? 'scale(0.97) rotate(-1deg)' : 'scale(1) rotate(0deg)';
+          }
+        });
+      }
+
+      // Intersection Observer for Smooth Staggered Scroll Transitions
+      const cards = document.querySelectorAll('.tactical-pop');
+      const observer = new IntersectionObserver((entries) => {
+        entries.forEach((entry) => {
+          if (entry.isIntersecting) {
+            entry.target.classList.add('opacity-100', 'translate-y-0');
+            entry.target.classList.remove('opacity-0', 'translate-y-4');
+            observer.unobserve(entry.target);
+          }
+        });
+      }, {
+        threshold: 0.1,
+        rootMargin: '0px 0px -40px 0px'
+      });
+
+      cards.forEach((card) => {
+        card.classList.add('opacity-0', 'translate-y-4', 'transition-all', 'duration-500');
+        observer.observe(card);
+      });
+    });
+  </script>
+</body></html>
